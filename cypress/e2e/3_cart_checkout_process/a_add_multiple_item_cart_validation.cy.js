@@ -23,10 +23,10 @@ describe("Confirm images and descriptions are displayed correctly.", () => {
         cy.get(globalComponents.shoppingCartBadge)
             .should("be.visible")
             .and("have.text", "6");
-
+        cy.percySnapshot('Shopping Cart Badge');
 
         cy.get(globalComponents.shoppingCart).click();
-        cy.url().should("include", pageURLs.yourCart);
+        cy.url().should("include", pageURLs.yourCart).percySnapshot('Your cart page');
 
         //  Validate if all products are in the cart
 

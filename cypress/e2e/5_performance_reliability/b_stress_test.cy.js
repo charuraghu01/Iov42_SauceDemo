@@ -8,7 +8,7 @@ describe("Simulate Multiple Users Logging In & Adding Items", () => {
         cy.loginToSauceDemo();
     });
 
-    it("TEST 9.4: Handle multiple clicks of add to cart and remove button (100 Items)", () => {
+    it("TEST 2.1: Handle multiple clicks of add to cart and remove button (100 Items)", () => {
         Cypress._.times(100, () => {
             cy.get(inventoryPage.allInventoryItemsList).first().within(() => {
                 cy.get("button").then(($btn) => {
@@ -27,5 +27,5 @@ describe("Simulate Multiple Users Logging In & Adding Items", () => {
         });
 
 
-    });    
+    });
 });

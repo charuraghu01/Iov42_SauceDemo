@@ -14,7 +14,8 @@ describe("Validate Sorting Feature on SauceDemo", () => {
         let uiNames = [];
         cy.get(inventoryPage.sortContainer)
             .should("be.visible")
-            .select("az");
+            .select("az")
+            .percySnapshot('Capture sorting selection');
         cy.get(inventoryPage.inventoryItem).each(($el) => {
             uiNames.push($el.text().trim());
         });

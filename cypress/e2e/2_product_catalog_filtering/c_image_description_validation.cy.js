@@ -16,6 +16,7 @@ describe("Confirm images and descriptions are displayed correctly.", () => {
                 .and(($el) => {
                     expect($el[0].naturalWidth).to.be.greaterThan(100);
                 });
+                cy.percySnapshot('Capture image');
         });
 
     });

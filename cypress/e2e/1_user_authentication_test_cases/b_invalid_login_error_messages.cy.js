@@ -19,6 +19,7 @@ describe('User Authentication test - Test login failure (invalid username/passwo
                 cy.get(loginPage.passwordInput).clear().should("not.be.disabled").clear().type(user.password);
                 cy.get(loginPage.loginButton).click();
                 cy.get(loginPage.errorMessage).should("be.visible").and("contain", user.expectedMessage);
+                cy.percySnapshot("Login Error Captured");
                 cy.get(loginPage.closeErrorMessage).click();
             });
         })
@@ -30,6 +31,7 @@ describe('User Authentication test - Test login failure (invalid username/passwo
                 cy.get(loginPage.passwordInput).clear().should("not.be.disabled").type(Cypress.env("PASSWORD"));
                 cy.get(loginPage.loginButton).click();
                 cy.get(loginPage.errorMessage).should("be.visible").and("contain", user.expectedMessage);
+                cy.percySnapshot("Login Error Captured");
                 cy.get(loginPage.closeErrorMessage).click();
             });
         })
@@ -51,6 +53,7 @@ describe('User Authentication test - Test login failure (invalid username/passwo
 
                 cy.get(loginPage.loginButton).click();
                 cy.get(loginPage.errorMessage).should("be.visible").and("contain", user.expectedMessage);
+                cy.percySnapshot("Login Error Captured");
                 cy.get(loginPage.closeErrorMessage).click();
             });
         });

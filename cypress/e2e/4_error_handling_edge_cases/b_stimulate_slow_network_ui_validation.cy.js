@@ -12,7 +12,7 @@ describe("Simulate Slow Network and Validate UI Handling", () => {
     it("TEST 1.1: Simulate slow UI response and verify items should load as expected", () => {
         cy.loginToSauceDemo();
         cy.wait(10000);
-        cy.get(inventoryPage.allInventoryItemsList, { timeout: 8000 }).should("be.visible");
+        cy.get(inventoryPage.allInventoryItemsList, { timeout: 8000 }).should("be.visible").percySnapshot('UI after wait');
         cy.get(inventoryPage.inventoryItem).should("have.length.greaterThan", 0);
     });
 

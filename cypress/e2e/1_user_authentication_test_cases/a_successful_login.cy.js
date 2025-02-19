@@ -18,11 +18,13 @@ describe('User Authentication test- Test successful login with valid credentials
                 cy.get(loginPage.passwordInput).clear().type(Cypress.env("PASSWORD"));
                 cy.get(loginPage.loginButton).should('be.visible').click();
                 cy.url().should("include", pageURLs.inventoryHomePage);
+                cy.percySnapshot('Inventory Page After Login');
                 cy.get(globalComponents.mainNavIcon).click();
                 cy.get(globalComponents.logoutMenu).click();
                 cy.url().should("include", "/");
             })
             cy.visit('/');
+            cy.percySnapshot('After Logout')
         });
     });
 

@@ -11,8 +11,8 @@ describe("Ensure all products load correctly on SauceDemo", () => {
     it("TEST 1.1: Verify if homepage should load all products with images, names, prices, and buttons", () => {
         cy.get(inventoryPage.allInventoryItemsList).should("have.length", 6);
         cy.get(inventoryPage.allInventoryItemsList).each(($el) => {
-            cy.wrap($el).find(inventoryPage.inventoryItem).should("be.visible").and("not.be.empty");
-            cy.wrap($el).find(inventoryPage.inventoryItemPrice).should("be.visible").and("contain", "$");
+            cy.wrap($el).find(inventoryPage.inventoryItem).should("be.visible").and("not.be.empty").percySnapshot('Capture Inventory Item');
+            cy.wrap($el).find(inventoryPage.inventoryItemPrice).should("be.visible").and("contain", "$").percySnapshot('Capture Inventory Price');
             cy.wrap($el).find(inventoryPage.addToCart).should("be.visible").and("be.enabled");
             cy.get(".inventory_item_img img").each(($img) => {
                 cy.wrap($img)
