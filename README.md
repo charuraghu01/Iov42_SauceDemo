@@ -18,7 +18,7 @@ It includes:
 4.Visual regression testing integrated with Percy.io
 5.Detailed test HTML and json reporting using MochaAwesome Reporter 
 
-API testing: AS saucedemo.com do not have any API. I created API test script in Postman for the requested API scenarios from https://dummyjson.com/. 
+API testing: As saucedemo.com do not have any API. I created API test script in Postman for the requested API scenarios from https://dummyjson.com/. 
 
 TEST COVERAGE: 
 Covered both positive and negative cases.   
