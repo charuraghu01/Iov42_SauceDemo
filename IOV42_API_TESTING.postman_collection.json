@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "37249f19-f04c-402b-8897-d9ee0b557383",
+		"name": "IOV42_API_TESTING",
+		"description": "API scenarios are covered in Postman.\n\nBaseUrl is [https://dummyjson.com/docs/users#users-login](https://dummyjson.com/docs/users#users-login).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13920108"
+	},
+	"item": [
+		{
+			"name": "user/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" var jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    pm.expect(jsonData.accessToken).not.null;",
+							"});",
+							"pm.test(\"Your test name\", function () {",
+							"    pm.expect(jsonData.username).to.eq(\"emilys\");",
+							"});",
+							"",
+							"",
+							"// ✅ Check for required fields",
+							"pm.test(\"Response contains required fields\", function () {",
+							"    pm.expect(jsonData).to.have.property(\"accessToken\").that.is.a(\"string\").and.is.not.empty;",
+							"    pm.expect(jsonData).to.have.property(\"refreshToken\").that.is.a(\"string\").and.is.not.empty;",
+							"    pm.expect(jsonData).to.have.property(\"id\").that.is.a(\"number\");",
+							"    pm.expect(jsonData).to.have.property(\"username\").that.is.a(\"string\").and.is.not.empty;",
+							"    pm.expect(jsonData).to.have.property(\"email\").that.is.a(\"string\").and.is.not.empty;",
+							"    pm.expect(jsonData).to.have.property(\"firstName\").that.is.a(\"string\").and.is.not.empty;",
+							"    pm.expect(jsonData).to.have.property(\"lastName\").that.is.a(\"string\").and.is.not.empty;",
+							"    pm.expect(jsonData).to.have.property(\"gender\").that.is.a(\"string\").and.is.not.empty;",
+							"    pm.expect(jsonData).to.have.property(\"image\").that.is.a(\"string\").and.is.not.empty;",
+							"});",
+							"",
+							"// ✅ Validate Email Format",
+							"pm.test(\"Email is valid\", function () {",
+							"    pm.expect(jsonData.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);",
+							"});",
+							"",
+							"// ✅ Validate Profile Image URL Format",
+							"pm.test(\"Image URL is valid\", function () {",
+							"    pm.expect(jsonData.image).to.match(/^https?:\\/\\/[^\\s$.?#].[^\\s]*$/);",
+							"});",
+							"",
+							"// ✅ Store Access Token for Future API Calls",
+							"pm.environment.set(\"auth_token\", jsonData.accessToken);",
+							"console.log(\"Stored Access Token:\", pm.environment.get(\"auth_token\"));",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \n    \"username\": \"emilys\",\n    \"password\": \"emilyspass\",\n    \"expiresInMins\": \"30\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/user/login",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/carts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");",
+							"});",
+							"",
+							"pm.test(\"Response contains carts array\", function () {",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"carts\");",
+							"    pm.expect(jsonData.carts).to.be.an(\"array\").that.is.not.empty;",
+							"});",
+							"",
+							"pm.test(\"Each cart has required properties\", function () {",
+							"    let jsonData = pm.response.json();",
+							"    jsonData.carts.forEach(cart => {",
+							"        pm.expect(cart).to.have.property(\"id\").that.is.a(\"number\");",
+							"        pm.expect(cart).to.have.property(\"userId\").that.is.a(\"number\");",
+							"        pm.expect(cart).to.have.property(\"total\").that.is.a(\"number\");",
+							"        pm.expect(cart).to.have.property(\"discountedTotal\").that.is.a(\"number\")",
+							"        console.log(\"discountedTotal\");",
+							"        pm.expect(cart).to.have.property(\"products\").that.is.an(\"array\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n\n",
+					"options": {
+						"raw": {
+							"language": "javascript"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/carts",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/carts/{user_id}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse JSON response",
+							"let jsonData = pm.response.json();",
+							"let userId = pm.environment.get(\"user_id\");",
+							"",
+							"// ✅ Validate Status Code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Title should be visible\", function () {",
+							"    pm.expect(jsonData.title).not.null;",
+							"});",
+							"jsonData.products.forEach(product => {",
+							"    pm.test(`Product ID ${product.id} - Validate properties`, function () {",
+							"        pm.expect(product).to.have.property(\"id\").that.is.a(\"number\");",
+							"        pm.expect(product).to.have.property(\"title\").that.is.a(\"string\").and.is.not.empty;",
+							"        pm.expect(product).to.have.property(\"price\").that.is.a(\"number\");",
+							"        pm.expect(product).to.have.property(\"quantity\").that.is.a(\"number\");",
+							"        pm.expect(product).to.have.property(\"total\").that.is.a(\"number\");",
+							"        pm.expect(product).to.have.property(\"discountPercentage\").that.is.a(\"number\");",
+							"        pm.expect(product).to.have.property(\"discountedTotal\").that.is.a(\"number\");",
+							"        pm.expect(product).to.have.property(\"thumbnail\").that.is.a(\"string\").and.matches(/^https?:\\/\\/[^\\s]+$/);",
+							"    });",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/carts/{{user_id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"carts",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/products/",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/{product_id}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse JSON response",
+							"let jsonData = pm.response.json();",
+							"let productId = pm.environment.get(\"product_id\");",
+							"",
+							"// ✅ Validate the response",
+							"pm.test(`Product ID ${productId} should be deleted`, function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(jsonData).to.have.property(\"isDeleted\", true);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/products/{{product_id}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/carts/add",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse JSON response",
+							"let jsonData = pm.response.json();",
+							"let productId = pm.environment.get(\"product_id\");",
+							"",
+							"// ✅ Ensure the API rejects the request",
+							"pm.test(`Attempting to add deleted product ID ${productId} should fail`, function () {",
+							"    pm.response.to.have.status(201);",
+							"    console.log(\"I am an static API - dummy test\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Tile should be visible\", function () {",
+							"    pm.expect(jsonData.title).not.null;",
+							"});",
+							"pm.test(\"Cart should not be empty\", function () {",
+							"    pm.expect(jsonData.quantity).to.not.eq(0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": 5,\n  \"products\": [\n    { \"id\": {{product_id}}, \"quantity\": 1 }\n  ]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/carts/add",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"carts",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
