@@ -1,12 +1,22 @@
 Iov42_SauceDemo
 
-Iov42_SauceDemo is a Cypress automation project designed for testing the frontend and backend functionalities of the SauceDemo application. It includes:
+Attached: 
+Cypress FE codebase.
+Postman API collection codebase. 
+test strategy documentation in pdf.
+Saucedemo bug report in excel.
+
+Iov42_SauceDemo is a Cypress automation project designed for testing the frontend functionalities of the SauceDemo application. 
+
+It includes:
 
 1.Implemented TDD approach. 
 2.Covered 47 frontend test cases for e2e functionality. 
-3.API testing NOT POSSIBLE as application is purely frontend-based with client-side rendering and no server calls are made for any actions. 
+3.API testing NOT POSSIBLE as application is purely frontend-based with client-side rendering and no server calls are made for any actions. Used different website for API test cases. 
 4.Visual regression testing integrated with Percy.io
 5.Detailed test HTML and json reporting using MochaAwesome Reporter 
+
+API testing: AS saucedemo.com do not have any API. I created API test script in Postman for the requested API scenarios from https://dummyjson.com/. 
 
 TEST COVERAGE: 
 Covered both positive and negative cases.   
