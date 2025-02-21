@@ -6,6 +6,8 @@ Postman API collection codebase.
 test strategy documentation in pdf.
 Saucedemo bug report in excel.
 
+Timelog approximately:  4 hours for automation coding.  2 -3  hours for exploratory testing, bug reports, and documentation. 
+
 Iov42_SauceDemo is a Cypress automation project designed for testing the frontend functionalities of the SauceDemo application. 
 
 It includes:
