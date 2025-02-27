@@ -27,6 +27,7 @@ module.exports = defineConfig({
 
     experimentalStudio: true,
     reporter: "cypress-mochawesome-reporter",
+    reporter: "mochawesome",
     reporterOptions: {
       reportDir: "cypress/reports/mocha",
       reportFilename: `consolidated-report-${dateTime}`,
