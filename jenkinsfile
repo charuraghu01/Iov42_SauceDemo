@@ -1,5 +1,13 @@
 pipeline {
-    agent any  // ✅ Allows running on any available node
+    agent any
+
+    tools {
+        nodejs "NodeJS"  // ✅ Use the configured NodeJS version from Jenkins
+    }
+
+    environment {
+        CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cache/Cypress"
+    }
 
     stages {
         stage('Checkout Code') {
@@ -10,20 +18,21 @@ pipeline {
 
         stage('Setup Node & Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'node -v'  // ✅ Verify Node.js version
+                sh 'npm -v'   // ✅ Verify npm version
+                sh 'npm install' // ✅ Install dependencies
             }
         }
 
         stage('Run Cypress Tests in Parallel') {
             parallel {
                 stage('Run Tests on Chrome') {
-                    agent { label 'chrome-node' }  // ✅ Change this if needed
                     steps {
                         sh 'npx cypress run --browser chrome'
                     }
                 }
+
                 stage('Run Tests on Firefox') {
-                    agent { label 'firefox-node' }  // ✅ Change this if needed
                     steps {
                         sh 'npx cypress run --browser firefox'
                     }
