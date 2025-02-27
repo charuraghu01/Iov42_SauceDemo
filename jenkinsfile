@@ -17,12 +17,14 @@ pipeline {
         }
 
         stage('Setup Node & Install Dependencies') {
-            steps {
-                sh 'node -v'  // ✅ Verify Node.js version
-                sh 'npm -v'   // ✅ Verify npm version
-                sh 'npm install' // ✅ Install dependencies
-            }
-        }
+    steps {
+        sh 'node -v'  // ✅ Verify Node.js version
+        sh 'npm -v'   // ✅ Verify npm version
+        sh 'npm install' // ✅ Install dependencies
+        sh 'npx cypress install' // ✅ Install Cypress binary
+    }
+}
+
 
         stage('Run Cypress Tests in Parallel') {
             parallel {
