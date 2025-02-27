@@ -25,46 +25,43 @@ pipeline {
     }
 }
 
-
-        stage('Run Cypress Tests in Parallel') {
+stage('Run Cypress Tests in Parallel') {
             parallel {
                 stage('Run Tests on Chrome') {
                     steps {
-                        sh 'npx cypress run --browser chrome'
+                        sh '''
+                        npx cypress run --browser chrome \
+                        --reporter cypress-mochawesome-reporter \
+                        --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true
+                        '''
                     }
                 }
-
                 stage('Run Tests on Firefox') {
                     steps {
-                        sh 'npx cypress run --browser firefox'
+                        sh '''
+                        npx cypress run --browser firefox \
+                        --reporter cypress-mochawesome-reporter \
+                        --reporter-options reportDir=cypress/reports,overwrite=false,html=true,json=true
+                        '''
                     }
                 }
             }
         }
 
-        stage('Generate Mochawesome Report') {
-            steps {
-                sh '''
-                npx mochawesome-merge cypress/reports/*.json -o cypress/reports/merged-report.json
-                npx mochawesome-report-generator cypress/reports/merged-report.json -o cypress/reports/
-                '''
-            }
-        }
-
-        stage('Archive Test Results') {
+        stage('Archive Cypress Reports') {
             steps {
                 archiveArtifacts artifacts: 'cypress/reports/**', fingerprint: true
             }
         }
 
-        stage('Publish Test Report') {
+        stage('Publish Cypress Test Report') {
             steps {
                 publishHTML(target: [
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
                     keepAll: true,
                     reportDir: 'cypress/reports/',
-                    reportFiles: 'index.html',
+                    reportFiles: 'index.html',  // ✅ Ensure this matches the generated report name
                     reportName: 'Cypress Test Report'
                 ])
             }

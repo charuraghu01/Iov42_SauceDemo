@@ -26,7 +26,7 @@ module.exports = defineConfig({
     },
 
     experimentalStudio: true,
-    //reporter: "cypress-mochawesome-reporter",
+    reporter: "cypress-mochawesome-reporter",
     reporter: "mochawesome",
     reporterOptions: {
       reportDir: "cypress/reports",
