@@ -11,6 +11,7 @@ module.exports = defineConfig({
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     defaultCommandTimeout: 10000,
     chromeWebSecurity: false,
+    experimentalRunAllSpecs: true,
     supportFile: "cypress/support/e2e.js",
     retries: {
       runMode: 2,    // Retries when running tests in `npx cypress run`

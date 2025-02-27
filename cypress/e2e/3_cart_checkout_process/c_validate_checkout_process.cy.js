@@ -16,10 +16,10 @@ describe("Confirm images and descriptions are displayed correctly.", () => {
         cy.get(checkOutPage.firstNameText).type(user.firstName);
         cy.get(checkOutPage.lastNameText).type(user.lastName);
         cy.get(checkOutPage.postalCodeText).type(user.zipCode);
-        cy.get('Checkout Page1 After Entering User Details');
+        cy.percySnapshot('Checkout Page1 After Entering User Details');
         cy.get(checkOutPage.continueButton).click();
         cy.url().should("include", pageURLs.checkOutStepTwo);
-        cy.get('Checkout Page2 After Entering User Details')
+        cy.percySnapshot('Checkout Page2 After Entering User Details');
         cy.get(checkOutPage.finishButton).click();
 
         //Validate successful checkout

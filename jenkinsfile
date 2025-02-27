@@ -1,0 +1,79 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/charuraghu01/Iov42_SauceDemo'
+            }
+        }
+
+        stage('Setup Node & Install Dependencies') {
+            agent { label 'master' } // Run this stage on the main Jenkins server
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Run Cypress Tests in Parallel') {
+            parallel {
+                stage('Run Tests on Chrome') {
+                    agent { label 'chrome-node' } // Assigns to Chrome Jenkins Node
+                    steps {
+                        sh 'npx cypress run --browser chrome'
+                    }
+                }
+
+                stage('Run Tests on Firefox') {
+                    agent { label 'firefox-node' } // Assigns to Firefox Jenkins Node
+                    steps {
+                        sh 'npx cypress run --browser firefox'
+                    }
+                }
+            }
+        }
+
+        stage('Generate Mochawesome Report') {
+            agent { label 'master' }
+            steps {
+                sh '''
+                npx mochawesome-merge cypress/reports/*.json -o cypress/reports/merged-report.json
+                npx mochawesome-report-generator cypress/reports/merged-report.json -o cypress/reports/
+                '''
+            }
+        }
+
+        stage('Archive Test Results') {
+            agent { label 'master' }
+            steps {
+                archiveArtifacts artifacts: 'cypress/reports/**', fingerprint: true
+            }
+        }
+
+        stage('Publish Test Report') {
+            agent { label 'master' }
+            steps {
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'cypress/reports/',
+                    reportFiles: 'index.html',
+                    reportName: 'Cypress Test Report'
+                ])
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Cleaning up workspace..."
+            cleanWs()
+        }
+    }
+}
+
+
+
+
+
