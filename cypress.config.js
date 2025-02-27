@@ -29,7 +29,7 @@ module.exports = defineConfig({
     reporter: "cypress-mochawesome-reporter",
     reporter: "mochawesome",
     reporterOptions: {
-      reportDir: "cypress/reports/mocha",
+      reportDir: "cypress/reports",
       reportFilename: `consolidated-report-${dateTime}`,
       overwrite: false,
       html: true,
